@@ -1,0 +1,14 @@
+{% extends "core/base.html" %}
+
+{% block main_content %}
+    <h2><a href="{% url "mainpage" %}">[Home]</a></h2>
+    <b>{{ blog.id }}</b>{{ blog.rate }}<br/>
+    <p>{{ blog.title }}</p>
+    <p>{{ blog.description }}</p>
+{% endblock  %}
+
+{% block additional_content %}
+    {% for post in posts %}
+        <h2><a href="/blogs/{{ blog.id }}/{{ post.id }}">{{ post.title }} {{ post.rate }}</a></h2>
+    {% endfor %}
+{% endblock  %}
