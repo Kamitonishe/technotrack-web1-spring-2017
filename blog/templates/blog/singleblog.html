@@ -1,14 +1,52 @@
 {% extends "core/base.html" %}
 
+{% block title %} {{ object.title }} {% endblock  %}
+
+
 {% block main_content %}
-    <h2><a href="{% url "mainpage" %}">[Home]</a></h2>
-    <b>{{ blog.id }}</b>{{ blog.rate }}<br/>
-    <p>{{ blog.title }}</p>
-    <p>{{ blog.description }}</p>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">{{ object.author }}: {{ object.title }}</h1>
+        </div>
+        <div class="panel-body">
+
+            <article>
+                {{ object.text }}
+            </article>
+
+            <footer>
+                <img src= {{ object.author.avatar.url }} alt="avatar" style="width: 100px; height: 100px;">
+            </footer>
+
+        </div>
+    </div>
+
+   <!-- <p>
+        Category:
+        {% for category in object.categories.all %}
+            <i>{{ category.title }}  </i>
+        {% endfor %}
+    </p> -->
+
 {% endblock  %}
 
 {% block additional_content %}
-    {% for post in posts %}
-        <h2><a href="/blogs/{{ blog.id }}/{{ post.id }}">{{ post.title }} {{ post.rate }}</a></h2>
+    <nav><a href="{% url "post:newpost" %}">Создать новый post</a></nav>
+    <h2>Posts:</h2>
+
+    {% for post in object.post_set.all %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><a href="{% url "post:singlepost" pk=post.id %}"> {{ post.title }} </a></h3>
+            </div>
+            <div class="panel-body">
+                <article>{{ post.text }}</article>
+            </div>
+            <div class="panel-footer">
+                {% if blog.author == user %}
+                    <div> <a href={% url "post:editpost" pk=post.id %}>Редактировать</a></div>
+                {% endif %}
+            </div>
+        </div>
     {% endfor %}
 {% endblock  %}

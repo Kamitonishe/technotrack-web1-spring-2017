@@ -1,13 +1,39 @@
 {%  extends "core/base.html" %}
 {% block main_content %}
 
-    <p>{{ object.author }}</p>
-    <p>{{ object.text }}</p>
-
-        <div>
-        {% for comment in object.comment_set.all %}
-                <i>Comments:{{ comment.text }}</i><br/>
-        {%  endfor %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">
+                    {{ object.author }}: {{ object.title }}
+            </h1>
         </div>
+        <div class="panel-body">
+            <article>{{ object.text }}</article>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block additional_content %}
+
+    <h2> Comments:</h2>
+
+    {% for comment in object.comment_set.all %}
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">
+                    {{ comment.author }}
+                </h1>
+            </div>
+            <div class="panel-body">
+                <article>{{ comment.text }}</article>
+            </div>
+        </div>
+
+    {%  endfor %}
+
+    <a href="{% url "comment:newcomment" %}">New comment</a>
 
 {% endblock %}

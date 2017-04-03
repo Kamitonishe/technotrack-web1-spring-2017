@@ -1,0 +1,12 @@
+{% extends "core/base.html" %}
+
+{% block main_content %}
+
+    <form method="post">
+        {{ form.errors }}
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit">
+    </form>
+
+{% endblock %}

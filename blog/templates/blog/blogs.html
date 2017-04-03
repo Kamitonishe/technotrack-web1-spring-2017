@@ -1,0 +1,34 @@
+{% extends "core/base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Blogs{% endblock  %}
+
+{% block main_content %}
+    <h1>Main page</h1>
+
+    <h3><a href="{% url "blog:newblog" %}">Создать новый блог</a></h3>
+
+    {% for blog in object_list %}
+        <h2><a href="{% url "blog:singleblog" pk=blog.id %}">{{ blog.title }}</a></h2>
+
+        <i>Category: </i>
+        {% for category in blog.categories.all %}
+            <i>{{ category.title }} </i>
+        {% endfor %}
+
+        <p><img src= {{ blog.author.avatar.url }} alt="avatar" style="width: 100px; height: 100px;"></p>
+    {% endfor %}
+
+{% endblock  %}
+
+
+{% block search %}
+    <form class="navbar-form navbar-left" role="search" method="get" action="{% url "blog:blogs" %}">
+        <div class="form-group">
+            {{ sortform.sort|add_class:"myinput" }}
+            {{ sortform.search.label_tag }}{{ sortform.search }}
+
+        </div>
+        <button type="submit" class="btn btn-default">Отправить</button>
+    </form>
+{% endblock %}

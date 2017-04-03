@@ -37,7 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'core.apps.CoreConfig',
+    'blog.apps.BlogConfig',
+    'post.apps.PostConfig',
+    'comment.apps.CommentConfig',
+    'widget_tweaks',
 ]
+
+AUTH_USER_MODEL = 'core.User'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = '/home/sergey/Programming/WebProject/media/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -50,6 +60,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'application.urls'
+LOGIN_URL = 'core:login'
+LOGIN_REDIRECT_URL = 'core:home'
+LOGOUT_REDIRECT_URL = 'core:home'
 
 TEMPLATES = [
     {
@@ -79,7 +92,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'BASE',
         'USER': 'USER',
-        'PASSWORD': 555,
+        'PASSWORD': 1,
         'HOST': 'localhost',
     }
 }

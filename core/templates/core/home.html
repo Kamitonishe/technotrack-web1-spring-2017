@@ -1,0 +1,25 @@
+{% extends "core/base.html" %}
+
+{% block title %}Main page{% endblock %}
+
+    {% block main_content %}
+
+        <h1>Добро пожаловать, {{ user.username }}!</h1>
+
+        <h2><a href={% url "blog:blogs" %}>Список блогов</a> </h2>
+
+    {% endblock %}
+
+    {% block additional_content %}
+
+        <footer>
+            <p>Number of your blogs - {{ blog_count|default:"no blogs"}}</p>
+            <p>Number of your posts - {{ post_count|default:"no posts"}}</p>
+            <p>Number of your comments - {{ comment_count|default:"no comments"}}</p>
+        </footer>
+
+    {% endblock %}
+
+
+
+

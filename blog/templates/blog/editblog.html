@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "core/base.html" %}
+
+{% block title %}Редактор блога{% endblock %}
+
+{% block main_content %}
+    <h2><a href={% url "blog:blogs" %}>All blogs</a> </h2>
+    <p>Id: {{ object.id }} </b><br/></h3>
+    <p>{{ object.title }}</p>
+    <i>{{ object.description }}</i>
+    <p><img src= {{ post.author.avatar.url }} alt="avatar"></p>
+
+
+     <form  method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit">
+    </form>
+
+{% endblock %}
