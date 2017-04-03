@@ -5,7 +5,7 @@
     <h2><a href={% url "blog:blogs" %}>All blogs</a> </h2>
     <i>{{ object.text }}</i>
 
-     <form  method="post">
+    <form  method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit">

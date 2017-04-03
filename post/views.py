@@ -1,4 +1,4 @@
-from django.shortcuts import render, resolve_url
+from django.shortcuts import render, resolve_url, get_object_or_404
 from .models import Post
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.views.generic.edit import FormView
@@ -32,7 +32,24 @@ class CreatePost(CreateView):
         form.instance.author = self.request.user
         return super(CreatePost, self).form_valid(form)
 
+class PostDetail(CreateView):
+    template_name = 'post/singlepost.html'
+    model = Comment
+    fields = ('text',)
+    success_url = 'blog:blogs'
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super(PostDetail, self).form_valid(form)
+
+    def dispatch(self, request, pk=None, *args, **kwargs):
+        self.postobject = get_object_or_404(Post, id=pk)
+        return super(PostDetail, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(PostDetail, self).get_context_data(**kwargs)
+        context['post'] = self.postobject
+        return context
 
 
 class UpdatePost(UpdateView):

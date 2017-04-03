@@ -4,11 +4,11 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h1 class="panel-title">
-                    {{ object.author }}: {{ object.title }}
+                <header>{{ post.author }}: {{ post.title }} </header>
             </h1>
         </div>
         <div class="panel-body">
-            <article>{{ object.text }}</article>
+            <article>{{ post.text }}</article>
         </div>
     </div>
 
@@ -19,21 +19,25 @@
 
     <h2> Comments:</h2>
 
-    {% for comment in object.comment_set.all %}
+    {% for comment in post.comment_set.all %}
 
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h1 class="panel-title">
-                    {{ comment.author }}
+                    <header> {{ comment.author }} </header>
                 </h1>
             </div>
             <div class="panel-body">
-                <article>{{ comment.text }}</article>
+                <article> {{ comment.text }} </article>
             </div>
         </div>
 
     {%  endfor %}
 
-    <a href="{% url "comment:newcomment" %}">New comment</a>
+    <form action="{% url "post:singlepost" pk=post.id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit">
+    </form>
 
 {% endblock %}

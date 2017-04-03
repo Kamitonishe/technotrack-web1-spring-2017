@@ -4,19 +4,34 @@
 {% block title %}Blogs{% endblock  %}
 
 {% block main_content %}
-    <h1>Main page</h1>
-
+    <header><h1> All Blogs </h1></header>
     <h3><a href="{% url "blog:newblog" %}">Создать новый блог</a></h3>
 
     {% for blog in object_list %}
-        <h2><a href="{% url "blog:singleblog" pk=blog.id %}">{{ blog.title }}</a></h2>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title"><a href="{% url "blog:singleblog" pk=blog.id %}"> {{ blog.title }} </a></h1>
+            </div>
+            <div class="panel-body">
+                <article>{{ blog.text }}</article>
+            </div>
+            <div class="panel-footer">
 
-        <i>Category: </i>
-        {% for category in blog.categories.all %}
-            <i>{{ category.title }} </i>
-        {% endfor %}
+                <p>Author: {{ blog.author.username }}</p>
 
-        <p><img src= {{ blog.author.avatar.url }} alt="avatar" style="width: 100px; height: 100px;"></p>
+                <p><img src= {% if blog.author.avatar %} {{ blog.author.avatar.url }} {% else %} # {% endif %} alt="avatar" style="width: 100px; height: 100px;"></p>
+
+                <footer>Category: </footer>
+                {% for category in blog.categories.all %}
+                    <footer>{{ category.title }} </footer>
+                {% endfor %}
+            </div>
+        </div>
+
+
+
+
+
     {% endfor %}
 
 {% endblock  %}
@@ -27,7 +42,6 @@
         <div class="form-group">
             {{ sortform.sort|add_class:"myinput" }}
             {{ sortform.search.label_tag }}{{ sortform.search }}
-
         </div>
         <button type="submit" class="btn btn-default">Отправить</button>
     </form>

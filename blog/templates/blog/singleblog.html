@@ -15,7 +15,7 @@
             </article>
 
             <footer>
-                <img src= {{ object.author.avatar.url }} alt="avatar" style="width: 100px; height: 100px;">
+                <img src= {% if object.author.avatar %} {{ object.author.avatar.url }} {% else %} # {% endif %} alt="avatar" style="width: 100px; height: 100px;">
             </footer>
 
         </div>

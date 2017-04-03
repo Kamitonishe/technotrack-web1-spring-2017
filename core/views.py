@@ -19,10 +19,16 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomePageView, self).get_context_data(**kwargs)
-        context['blog_count'] = Blog.objects.all().filter(author=self.request.user).count()
-        context['post_count'] = Post.objects.all().filter(author=self.request.user).count()
-        context['comment_count'] = Comment.objects.all().filter(author=self.request.user).count()
-        return context
+        if self.request.user.is_authenticated:
+            context['blog_count'] = Blog.objects.all().filter(author=self.request.user).count()
+            context['post_count'] = Post.objects.all().filter(author=self.request.user).count()
+            context['comment_count'] = Comment.objects.all().filter(author=self.request.user).count()
+            return context
+        else:
+            context['blog_count'] = Blog.objects.all().count()
+            context['post_count'] = Post.objects.all().count()
+            context['comment_count'] = Comment.objects.all().count()
+            return context
 
 class RegisterFormView(FormView):
     form_class = UserRegistration

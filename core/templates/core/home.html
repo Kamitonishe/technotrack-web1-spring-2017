@@ -3,8 +3,10 @@
 {% block title %}Main page{% endblock %}
 
     {% block main_content %}
+        {% if user.is_authenticated %}
+            <h1>Добро пожаловать, {{ user.username }}!</h1>
+        {% endif %}
 
-        <h1>Добро пожаловать, {{ user.username }}!</h1>
 
         <h2><a href={% url "blog:blogs" %}>Список блогов</a> </h2>
 
@@ -12,11 +14,45 @@
 
     {% block additional_content %}
 
-        <footer>
-            <p>Number of your blogs - {{ blog_count|default:"no blogs"}}</p>
-            <p>Number of your posts - {{ post_count|default:"no posts"}}</p>
-            <p>Number of your comments - {{ comment_count|default:"no comments"}}</p>
-        </footer>
+            {% if user.is_anonymous %}
+
+                <div class="panel panel-primary">
+                    <h4>Number of all blogs -
+                        <span class="badge">{{ blog_count|default:"no blogs" }}</span>
+                    </h4>
+                </div>
+                <div class="panel panel-primary">
+                    <h4>Number of all posts -
+                        <span class="badge">{{ post_count|default:"no posts" }}</span>
+                    </h4>
+                </div>
+                <div class="panel panel-primary">
+                    <h4>Number of all comments -
+                        <span class="badge">{{ comment_count|default:"no comments" }}</span>
+                    </h4>
+                </div>
+
+            {% else %}
+
+                <div class="panel panel-primary">
+                    <h4>Number of your blogs -
+                        <span class="badge">{{ blog_count|default:"no blogs" }}</span>
+                    </h4>
+                </div>
+
+                <div class="panel panel-primary">
+                    <h4>Number of your posts -
+                        <span class="badge">{{ post_count|default:"no posts" }}</span>
+                    </h4>
+                </div>
+
+                <div class="panel panel-primary">
+                    <h4>Number of your comments -
+                        <span class="badge">{{ comment_count|default:"no comments" }}</span>
+                    </h4>
+                </div>
+
+            {% endif %}
 
     {% endblock %}
 
